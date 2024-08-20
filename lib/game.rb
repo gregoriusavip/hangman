@@ -3,8 +3,6 @@
 # Manage game state, save and load game
 class Game
   DICTIONARY = 'google-10000-english'
-  def intialize
-  end
 
   def self.random_word
     return unless File.exist? DICTIONARY

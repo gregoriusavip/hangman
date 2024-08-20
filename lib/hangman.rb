@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require_relative('game')
+
 # Create instances of a hangman game
-class Hangman
+class Hangman < Game
   def intialize(secret_word, guess_limit, correct_letters = Set[], incorrect_letters = Set[])
     self.secret_word = secret_word.split('')
     self.guess_limit = guess_limit
