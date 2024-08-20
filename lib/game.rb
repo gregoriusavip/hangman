@@ -9,6 +9,6 @@ class Game
 
     File.open(DICTIONARY).each.filter do |word|
       word.strip.length.between?(5, 12)
-    end.sample.strip
+    end.sample
   end
 end
