@@ -12,6 +12,16 @@ class Display
   end
 
   def self.hangman_progress(progress)
-    puts progress.join(', ')
+    puts progress.join(' ')
+  end
+
+  def self.announce_win(answer)
+    puts 'Congratulations! You have found the answer'
+    puts "The secret word is: #{answer}"
+  end
+
+  def self.announce_lose(answer)
+    puts 'You ran out of guess!'
+    puts "The secret word is: #{answer}"
   end
 end
