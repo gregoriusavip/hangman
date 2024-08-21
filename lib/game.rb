@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Manage game state, save and load game
-class Game
+module Game
   DICTIONARY = 'google-10000-english'
 
   def self.random_word
@@ -9,6 +9,6 @@ class Game
 
     File.open(DICTIONARY).each.filter do |word|
       word.strip.length.between?(5, 12)
-    end.sample
+    end.sample.chomp
   end
 end
