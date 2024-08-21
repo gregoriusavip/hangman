@@ -3,12 +3,10 @@
 require_relative('game')
 
 # Create instances of a hangman game
-class Hangman
+class Hangman < Game
   attr_reader :guess_limit, :correct_letters, :incorrect_letters, :progress
 
-  include Game
-
-  def initialize(guess_limit, word = Game.random_word, correct_letters = Set[], incorrect_letters = Set[])
+  def initialize(guess_limit, word = Hangman.random_word, correct_letters = Set[], incorrect_letters = Set[]) # rubocop:disable Lint/MissingSuper
     self.secret_word = word.split('')
     self.guess_limit = guess_limit
     self.correct_letters = correct_letters

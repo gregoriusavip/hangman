@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Manage game state, save and load game
-module Game
+class Game
   DICTIONARY = 'google-10000-english'
 
   def self.random_word
