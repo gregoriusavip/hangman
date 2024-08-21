@@ -3,22 +3,52 @@
 require_relative('game')
 
 # Create instances of a hangman game
-class Hangman < Game
-  def intialize(secret_word, guess_limit, correct_letters = Set[], incorrect_letters = Set[])
-    self.secret_word = secret_word.split('')
+class Hangman
+  attr_reader :guess_limit, :correct_letters, :incorrect_letters, :progress
+
+  include Game
+
+  def initialize(guess_limit, word = Game.random_word, correct_letters = Set[], incorrect_letters = Set[])
+    self.secret_word = word.split('')
     self.guess_limit = guess_limit
     self.correct_letters = correct_letters
     self.incorrect_letters = incorrect_letters
     self.progress = build_progress
   end
 
-  def guess(letter)
-    return nil unless validate_guess(letter)
-
-    update_progress(letter)
+  def loop
+    play_game until win? || game_over?
   end
 
   private
+
+  def play_game
+    Display.guess_prompt(guess_limit)
+    Display.hangman_progress(progress)
+    Display.chosen_letters(correct_letters, incorrect_letters)
+    puts 'What is your guess?'
+    guess(gets.chomp)
+  end
+
+  def guess(letter)
+    return nil unless validate_guess(letter.downcase)
+
+    update_progress(letter.downcase)
+  end
+
+  def win?
+    return false unless secret_word.eql?(progress)
+
+    Display.announce_win(secret_word.join(''))
+    true
+  end
+
+  def game_over?
+    return false unless guess_limit.eql?(0)
+
+    Display.announce_lose(secret_word.join(''))
+    true
+  end
 
   def build_progress
     secret_word.map { |char| correct_letters.include?(char) ? char : '_' }
@@ -29,16 +59,24 @@ class Hangman < Game
   end
 
   def update_progress(letter)
+    incorrect = true
     secret_word.each_with_index do |l, i|
-      l.eql?(letter) ? modify_progress_at(l, i) : incorrect_letters << letter
+      incorrect = modify_progress_at(l, i) if l.eql?(letter)
     end
-    self.guess_limit -= 1
+    guess_incorrect(letter) if incorrect
   end
 
   def modify_progress_at(letter, index)
     progress[index] = letter
     correct_letters << letter
+    false
   end
 
-  attr_accessor :secret_word, :guess_limit, :correct_letters, :incorrect_letters, :progress
+  def guess_incorrect(letter)
+    incorrect_letters << letter
+    self.guess_limit -= 1
+  end
+
+  attr_accessor :secret_word
+  attr_writer :guess_limit, :correct_letters, :incorrect_letters, :progress
 end
