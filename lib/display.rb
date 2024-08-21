@@ -6,6 +6,7 @@ class Display
     guess_prompt(guess_limit)
     chosen_letters(correct_letters, incorrect_letters)
     hangman_progress(progress)
+    puts 'What is your guess?'
   end
 
   def self.announce_win(answer)
