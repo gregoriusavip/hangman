@@ -21,10 +21,7 @@ class Hangman < Game
   private
 
   def play_game
-    Display.guess_prompt(guess_limit)
-    Display.hangman_progress(progress)
-    Display.chosen_letters(correct_letters, incorrect_letters)
-    puts 'What is your guess?'
+    Display.hangman_prompt_loop(guess_limit, correct_letters, incorrect_letters, progress)
     guess(gets.chomp)
   end
 
