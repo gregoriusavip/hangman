@@ -36,4 +36,9 @@ class Display
     puts "Correct chosen letters: #{correct_letters.to_a}"
     puts "Incorrect chosen letters: #{incorrect_letters.to_a}"
   end
+
+  def self.main_menu_prompt
+    puts 'Would you like to play a new game or load a save file?'
+    puts '[y|Y] to load a save file, any other input otherwise'
+  end
 end

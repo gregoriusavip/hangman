@@ -2,4 +2,4 @@
 
 require_relative('lib/main_menu')
 
-MainMenu.new.new_game
+MainMenu.new.menu

@@ -5,14 +5,17 @@ require_relative('display')
 
 # Create instances of a hangman game
 class Hangman < Game
-  attr_reader :guess_limit, :correct_letters, :incorrect_letters, :progress
-
-  def initialize(guess_limit, word = Hangman.random_word, correct_letters = Set[], incorrect_letters = Set[]) # rubocop:disable Lint/MissingSuper
-    self.secret_word = word.split('')
+  def initialize(guess_limit, word = Hangman.random_word.split(''), correct_letters = Set[], incorrect_letters = Set[]) # rubocop:disable Lint/MissingSuper
+    self.secret_word = word
     self.guess_limit = guess_limit
     self.correct_letters = correct_letters
     self.incorrect_letters = incorrect_letters
     self.progress = build_progress
+  end
+
+  def self.load(yaml_file)
+    vars = from_yaml(yaml_file)
+    new(vars[:guess_limit], vars[:secret_word], vars[:correct_letters], vars[:incorrect_letters])
   end
 
   private
@@ -73,6 +76,5 @@ class Hangman < Game
     self.guess_limit -= 1
   end
 
-  attr_accessor :secret_word
-  attr_writer :guess_limit, :correct_letters, :incorrect_letters, :progress
+  attr_accessor :guess_limit, :correct_letters, :incorrect_letters, :progress, :secret_word
 end

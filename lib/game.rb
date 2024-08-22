@@ -23,11 +23,16 @@ class Game
     end
   end
 
+  def self.from_yaml(yaml_file)
+    YAML.load_file(yaml_file, permitted_classes: [Set, Symbol])
+  end
+
   private
 
   def save_and_quit
     Display.saving_prompt
     gets.chomp.eql?('1') ? save : false
+    puts "\n"
   end
 
   def to_yaml(**args)
