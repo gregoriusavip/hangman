@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative('game')
+require_relative('display')
 
 # Create instances of a hangman game
 class Hangman < Game
@@ -14,11 +15,11 @@ class Hangman < Game
     self.progress = build_progress
   end
 
-  def loop
-    play_game until win? || game_over?
-  end
-
   private
+
+  def save
+    to_yaml(secret_word:, guess_limit:, correct_letters:, incorrect_letters:)
+  end
 
   def play_game
     Display.hangman_prompt_loop(guess_limit, correct_letters, incorrect_letters, progress)

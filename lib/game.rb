@@ -15,10 +15,23 @@ class Game
     end.sample.chomp
   end
 
+  def loop
+    until win? || game_over?
+      break if save_and_quit
+
+      play_game
+    end
+  end
+
   private
 
+  def save_and_quit
+    Display.saving_prompt
+    gets.chomp.eql?('1') ? save : false
+  end
+
   def to_yaml(**args)
-    FileUtils.mkdir_p(File.dirname('./saves'))
-    File.write('/saves/save.yml', YAML.dump(args))
+    FileUtils.mkdir_p 'saves'
+    File.write('./saves/save.yml', YAML.dump(args))
   end
 end
