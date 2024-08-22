@@ -7,6 +7,10 @@ require 'yaml'
 class Game
   DICTIONARY = 'google-10000-english'
 
+  def initialize
+    @exit_flag = false
+  end
+
   def self.random_word
     return unless File.exist? DICTIONARY
 
@@ -16,11 +20,7 @@ class Game
   end
 
   def loop
-    until win? || game_over?
-      break if save_and_quit
-
-      play_game
-    end
+    play_game until @exit_flag || win? || game_over?
   end
 
   def self.from_yaml(yaml_file)
@@ -30,9 +30,8 @@ class Game
   private
 
   def save_and_quit
-    Display.saving_prompt
-    gets.chomp.eql?('1') ? save : false
-    puts "\n"
+    save
+    @exit_flag = true
   end
 
   def to_yaml(**args)

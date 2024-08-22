@@ -5,7 +5,8 @@ require_relative('display')
 
 # Create instances of a hangman game
 class Hangman < Game
-  def initialize(guess_limit, word = Hangman.random_word.split(''), correct_letters = Set[], incorrect_letters = Set[]) # rubocop:disable Lint/MissingSuper
+  def initialize(guess_limit, word = Hangman.random_word.split(''), correct_letters = Set[], incorrect_letters = Set[])
+    super()
     self.secret_word = word
     self.guess_limit = guess_limit
     self.correct_letters = correct_letters
@@ -26,13 +27,14 @@ class Hangman < Game
 
   def play_game
     Display.hangman_prompt_loop(guess_limit, correct_letters, incorrect_letters, progress)
-    guess(gets.chomp)
+    input = gets.chomp.downcase
+    input.eql?('save') ? save_and_quit : guess(input)
   end
 
   def guess(letter)
-    return nil unless validate_guess(letter.downcase)
+    return nil unless validate_guess(letter)
 
-    update_progress(letter.downcase)
+    update_progress(letter)
   end
 
   def win?
@@ -76,5 +78,5 @@ class Hangman < Game
     self.guess_limit -= 1
   end
 
-  attr_accessor :guess_limit, :correct_letters, :incorrect_letters, :progress, :secret_word
+  attr_accessor :guess_limit, :correct_letters, :incorrect_letters, :progress, :secret_word, :input
 end

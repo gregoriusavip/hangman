@@ -6,12 +6,7 @@ class Display
     guess_prompt(guess_limit)
     chosen_letters(correct_letters, incorrect_letters)
     hangman_progress(progress)
-    puts 'What is your guess?'
-  end
-
-  def self.saving_prompt
-    puts 'Would you like to continue or save and quit the game?'
-    puts '1 to save and quit, any other input otherwise'
+    puts 'Input a valid guess or type "save" to save the game and quit'
   end
 
   def self.announce_win(answer)
