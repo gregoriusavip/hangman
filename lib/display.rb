@@ -9,6 +9,11 @@ class Display
     puts 'What is your guess?'
   end
 
+  def self.saving_prompt
+    puts 'Would you like to continue or save and quit the game?'
+    puts '1 to save and quit, any other input otherwise'
+  end
+
   def self.announce_win(answer)
     puts 'Congratulations! You have found the answer'
     puts "The secret word is: #{answer}"
